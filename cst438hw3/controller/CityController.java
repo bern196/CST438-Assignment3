@@ -26,16 +26,17 @@ import cst438hw3.service.WeatherService;
 @RestController
 @RequestMapping("/")
 
-//@PostMapping("/cities/reservation")
 
+//@PostMapping("/cities/reservation")
+// comments 
 //public String createReservation(
-		
-//	@RequestParam("city") String cityName, 
-//	@RequestParam("level") String level, 
-	//@RequestParam("email") String email, 
-	
+
+//	@RequestParam("city") String cityName,
+//	@RequestParam("level") String level,
+	//@RequestParam("email") String email,
+
 //	Model model) {
-	
+
 	//model.addAttribute("city", cityName);
 	////model.addAttribute("level", level);
 //	model.addAttribute("email", email);
@@ -44,94 +45,94 @@ import cst438hw3.service.WeatherService;
 //}
 
 public class CityController {
-	
+
 	@Autowired
 	CityRepository cityRepository;
-	
-	
+
+
 	@GetMapping("/cities/{city}")
-	public String getCityInfo(@PathVariable("city") String cityName, 
+	public String getCityInfo(@PathVariable("city") String cityName,
                                Model model) {
-		
-	
+
+
 		List<City> cities = cityRepository.findByName(cityName);
-		
+
 		TempAndTime tempAndTime = new TempAndTime(100, 123511, 0);
-		
+
 		String content = "<div> <h1>City</h1>";
-		
+
 		content += "<table>";
-		
+
 		for (City city: cities) {
-			
+
 			content += "<tr>";
 			content += "<td>ID</td>";
-			content += "<td>" + city.getId();		
+			content += "<td>" + city.getId();
 			content += "</td>";
 			content += "</tr>";
-			
+
 			content += "<tr>";
 			content += "<td>Name</td>";
-			content += "<td>" + city.getName();	
+			content += "<td>" + city.getName();
 			content += "</td>";
 			content += "</tr>";
-			
+
 			content += "<tr>";
 			content += "<td>Country Code</td>";
 			content += "<td>" + city.getCountry().getCode();
 			content += "</td>";
 			content += "</tr>";
-			
+
 			content += "<tr>";
 			content += "<td>Country Name</td>";
 			content += "<td>"+ city.getCountry().getName();
 			content += "</td>";
 			content += "</tr>";
-			
+
 			content += "<tr>";
 			content += "<td>District</td>";
-			content += "<td>" + city.getDistrict();	
+			content += "<td>" + city.getDistrict();
 			content += "</td>";
 			content += "</tr>";
-			
+
 			content += "<tr>";
 			content += "<td>Population</td>";
 			content += "<td>" + city.getPopulation();
-			content += "</td>";			
+			content += "</td>";
 			content += "</tr>";
 		}
-		
+
 		content += "<tr>";
 		content += "<td></td>";
 		content += "<td></td>";
-		content += "</td>";			
+		content += "</td>";
 		content += "</tr>";
-		
-		
+
+
 		//format time
-		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");		
-		
+		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
+
 		//to Fahrenheit
 		double toFahrenheit = (tempAndTime.temp - 273.15) * 9.0 / 5.0 + 32.0;
-		
+
 		content += "<tr>";
 		content += "<td>Local Weather</td>";
-		content += "<td>" + toFahrenheit;	
+		content += "<td>" + toFahrenheit;
 		content += "</td>";
 		content += "</tr>";
-		
+
 		content += "<tr>";
 		content += "<td>Local Time</td>";
-		content += "<td>" + sdf.format(new Date(tempAndTime.time)); 	
+		content += "<td>" + sdf.format(new Date(tempAndTime.time));
 		content += "</td>";
 		content += "</tr>";
-		
-		
-		content += "</table>";	
-		
-		
+
+
+		content += "</table>";
+
+
 		content += "</div>";
-	    
+
 		return content;
      }
 }
